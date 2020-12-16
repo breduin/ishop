@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load mptt_tags %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'catalog' %}">Catalog</a></li>
+      {% for crumb in crumbs %}
+    <li class="breadcrumb-item"><a href="{{ crumb.get_absolute_url }}">{{ crumb }}</a></li>
+      {%endfor%}
+    <li class="breadcrumb-item active" aria-current="page">{{ category }}</li>
+  </ol>
+</nav>
+
+
+{% for product in products %}
+  <div class="row">
+    <div class="col">
+<div class="card" style="width: 18rem;">
+  <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">{{ product.name }}</p>
+    <a href="#" class="btn btn-primary">To busket</a>
+  </div>
+</div>
+          </div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}
+
