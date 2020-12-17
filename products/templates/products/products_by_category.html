@@ -14,10 +14,13 @@
 </nav>
 
 
-{% for product in products %}
-  <div class="row">
+{% for c, qs in products_by_category.items %}
+<h2>{{ c }}</h2>
+  <div class="row .row-cols-3">
+ {% for product in qs %}
+
     <div class="col">
-<div class="card" style="width: 18rem;">
+<div class="card h-100" style="width: 18rem;">
   <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
   <div class="card-body">
     <h5 class="card-title">{{ product.name }}</h5>
@@ -26,9 +29,12 @@
   </div>
 </div>
           </div>
-  </div>
 
-{% endfor %}
+ {% endfor %}
+</div>
+    {% endfor %}
+
+
 
 {% endblock %}
 
