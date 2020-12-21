@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+{% for cart_product in products %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+       {{ cart_product.product.name }}
+
+
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+{% endblock %}
+

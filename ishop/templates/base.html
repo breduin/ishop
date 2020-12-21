@@ -82,11 +82,13 @@
 <ul>
     {% recursetree categories %}
         <li>
-            <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
             {% if not node.is_leaf_node %}
+             <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
                 <ul class="children">
                     {{ children }}
                 </ul>
+            {% else %}
+             <a href="{{ node.get_all_products_url }}">{{ node.name }}</a>
             {% endif %}
         </li>
     {% endrecursetree %}
@@ -95,7 +97,6 @@
         {% endcache %}
     </div>
     <div class="col-9">
-      <h1>Products</h1>
       {% block content %}{% endblock %}
     </div>
   </div>

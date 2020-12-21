@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'mptt',
     'debug_toolbar',
     'manufacturers.apps.ManufacturersConfig',
+    'djmoney',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [

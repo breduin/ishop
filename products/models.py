@@ -1,3 +1,4 @@
+from djmoney.models.fields import MoneyField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
@@ -13,13 +14,17 @@ class Category(MPTTModel):
     updated_at = models.DateTimeField(auto_now=True,
                                       verbose_name='Updated at')
     name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=32, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={"pk": self.pk})
+        return reverse('category', kwargs={"slug": self.slug})
+
+    def get_all_products_url(self):
+        return reverse('all-products-in-category', kwargs={"slug": self.slug})
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -52,11 +57,18 @@ class Product(models.Model):
     image = models.ImageField(upload_to=upload_path,
                               blank=True,
                               null=True)
+    short_description = models.CharField(max_length=64,
+                                   blank=True,
+                                   null=True, help_text='Maximum 64 symbols')
     description = models.TextField(max_length=1200,
                                   blank=True,
                                   null=True)
-    price = models.PositiveIntegerField(blank=True,
-                                        null=True)
+    price = MoneyField(max_digits=14,
+                       decimal_places=2,
+                       default_currency='EUR',
+                       blank=True,
+                       null=True,
+                       verbose_name='Price')
 
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE, default=1)
 
