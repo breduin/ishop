@@ -65,7 +65,9 @@ TEMPLATES = [
         'DIRS': [
             'ishop/templates/',
             'products/templates/',
-            'manufacturers/templates/'
+            'manufacturers/templates/',
+            'cart/templates/',
+            'cart/templatetags/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

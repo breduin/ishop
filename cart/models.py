@@ -4,9 +4,17 @@ from products.models import Product
 
 class CartProduct(models.Model):
     title = 'Cart product'
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
     created_at = models.DateTimeField(verbose_name='Created at',
                                       auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True,
                                       verbose_name='Updated at')
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    qty = models.PositiveIntegerField(default=1)
+
+    @property
+    def sum(self):
+        if self.product.price:
+            return self.product.price*self.qty
+        else:
+            return 0
 
