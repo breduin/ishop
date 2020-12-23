@@ -1,10 +1,10 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DeleteView
 from django.views.generic.base import View
 from products.models import Product
 from .models import CartProduct
-from django.http import HttpResponse
 
 
 class CartView(ListView):
@@ -28,7 +28,6 @@ class CartView(ListView):
         return context
 
 
-
 class AddToCartView(View):
 
     def get(self, request, *args, **kwargs):
@@ -42,5 +41,21 @@ class AddToCartView(View):
             newcartproduct.qty += 1
             newcartproduct.save(update_fields=['qty'])
         return render(request, 'cart/add_to_cart_view.html')
+
+
+class DeleteCartProductView(DeleteView):
+    model = CartProduct
+    success_url = reverse_lazy('cart')
+
+
+class ChangeQtyView(View):
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        p = CartProduct.objects.get(pk=kwargs["pk"])
+        p.qty = int(self.request.POST.get('qty'))
+        p.save()
+        return HttpResponseRedirect(reverse_lazy('cart'))
+
 
 
