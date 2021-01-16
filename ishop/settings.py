@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'manufacturers.apps.ManufacturersConfig',
     'djmoney',
     'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [

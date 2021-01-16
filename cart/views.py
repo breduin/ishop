@@ -51,7 +51,6 @@ class DeleteCartProductView(DeleteView):
 class ChangeQtyView(View):
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         p = CartProduct.objects.get(pk=kwargs["pk"])
         p.qty = int(self.request.POST.get('qty'))
         p.save()
