@@ -69,6 +69,7 @@ TEMPLATES = [
             'manufacturers/templates/',
             'cart/templates/',
             'cart/templatetags/',
+            'orders/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

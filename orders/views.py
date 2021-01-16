@@ -1,6 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, View
 from cart.models import CartProduct
+from .forms import OrderForm
 
 
 class OrderView(ListView):
@@ -21,5 +24,14 @@ class OrderView(ListView):
                 total_qty += product.qty
         context['total_cost'] = total_cost
         context['total_qty'] = total_qty
+        oform = OrderForm(self.request.GET, **kwargs)
+        oform.is_valid()
+        context['oform'] = oform
         return context
 
+
+class OrderSubmitView(View):
+
+    def post(self, request, *args, **kwargs):
+        address = self.request.POST.get('delivery_address')
+        return render(request, 'orders/order_submit.html', {'address': address})

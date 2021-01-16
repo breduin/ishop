@@ -36,7 +36,11 @@
 
       <td>{{ cart_product.product.price }}</td>
       <td>{{ cart_product.sum }}</td>
-      <td><a href="{% url 'remove-from-cart' cart_product.pk %}"><button type="button" class="btn btn-outline-danger btn-sm">Remove</button></td>
+      <td>
+          <a href="{% url 'remove-from-cart' cart_product.pk %}">
+              <button type="button" class="btn btn-outline-danger btn-sm">Remove</button>
+          </a>
+      </td>
 
 
     </tr>
@@ -44,7 +48,7 @@
 
       <tr>
       <th scope="col" colspan="4">Total cost:</th>
-      <th scope="col">{{ total_cost }}</td>
+      <th scope="col">{{ total_cost }}</th>
     </tr>
   </tbody>
 </table>
