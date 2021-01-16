@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'mptt',
     'debug_toolbar',
     'manufacturers.apps.ManufacturersConfig',
+    'djmoney',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +66,10 @@ TEMPLATES = [
         'DIRS': [
             'ishop/templates/',
             'products/templates/',
-            'manufacturers/templates/'
+            'manufacturers/templates/',
+            'cart/templates/',
+            'cart/templatetags/',
+            'orders/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {

@@ -4,6 +4,7 @@ from .models import Category, Product
 
 admin.site.register(Product)
 
+
 admin.site.register(
     Category,
     DraggableMPTTAdmin,
@@ -15,4 +16,6 @@ admin.site.register(
     list_display_links=(
         'indented_title',
     ),
+    prepopulated_fields = {"slug": ("name", )},
 )
+

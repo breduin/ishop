@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per item</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for cart_product in products %}
+
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ cart_product.product.name }}</td>
+      <td>{{ cart_product.qty }}</td>
+
+      <td>{{ cart_product.product.price }}</td>
+      <td>{{ cart_product.sum }}</td>
+
+
+    </tr>
+  {% endfor %}
+
+      <tr>
+      <th scope="col" colspan="4">Total cost:</th>
+      <th scope="col">{{ total_cost }}</th>
+    </tr>
+  </tbody>
+</table>
+
+<a class="btn btn-outline-secondary btn-sm" href="{% url 'cart' %}" role="button">Edit cart</a>
+<hr>
+<form method="POST" action="{% url 'order-submit' %}">
+          {% csrf_token %}
+
+    {# look at https://docs.djangoproject.com/en/3.1/ref/forms/widgets/#radioselect for the code explanation #}
+    {{ oform.payment_type.label }}
+    {% for item in oform.payment_type %}
+<div class="form-check">
+    {{ item.tag }}
+  <label class="form-check-label" for="{{ item.id_for_label }}">
+    {{ item.choice_label }}
+  </label>
+</div>
+    {% endfor %}
+
+<div class="mb-3">
+  <label class="form-label" for="{{ oform.phone.id_for_label }}">{{ oform.phone.label }}</label>
+  {{ oform.phone }}
+</div>
+<div class="mb-3">
+  <label class="form-label" for="{{ oform.contact_person.id_for_label }}">{{ oform.contact_person.label }}</label>
+  {{ oform.contact_person }}
+</div>
+<div class="mb-3">
+  <label class="form-label" for="{{ oform.info.id_for_label }}">{{ oform.info.label }}</label>
+  {{ oform.info }}
+</div>
+
+    {{ oform.delivery_type.label }}
+    {% for item in oform.delivery_type %}
+<div class="form-check">
+    {{ item.tag }}
+  <label class="form-check-label" for="{{ item.id_for_label }}">
+    {{ item.choice_label }}
+  </label>
+</div>
+    {% endfor %}
+
+<div class="mb-3">
+  <label class="form-label" for="{{ oform.delivery_address.id_for_label }}">{{ oform.delivery_address.label }}</label>
+  {{ oform.delivery_address }}
+</div>
+
+    <button class="btn btn-primary" type="submit">Send order</button>
+</form>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+

@@ -14,18 +14,18 @@
 </nav>
 
 
-{% for c, qs in products_by_category.items %}
-<h2>{{ c }}</h2>
+{% for key, value in products_by_category.items %}
+<a href="{% url 'all-products-in-category' value.0.slug %}"><h2>{{ value.0.name }}</h2></a>
   <div class="row .row-cols-3">
- {% for product in qs %}
+ {% for product in value.1 %}
 
     <div class="col">
 <div class="card h-100" style="width: 18rem;">
-  <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+    <a href="{{ product.get_absolute_url }}"> <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}"></a>
   <div class="card-body">
-    <h5 class="card-title">{{ product.name }}</h5>
-    <p class="card-text">{{ product.name }}</p>
-    <a href="#" class="btn btn-primary">To busket</a>
+      <a href="{{ product.get_absolute_url  }}"><h5 class="card-title">{{ product.name }}</h5></a>
+    <p class="card-text">{{ product.short_description|default_if_none:""|truncatechars:64 }}</p>
+    <a href="{% url 'add-to-cart' product.pk %}" class="btn btn-primary">To cart</a>
   </div>
 </div>
           </div>

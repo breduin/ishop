@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  {% for crumbs in breadcrumbs %}
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'catalog' %}">Catalog</a></li>
+      {% for crumb in crumbs %}
+    <li class="breadcrumb-item"><a href="{{ crumb.get_absolute_url }}">{{ crumb }}</a></li>
+      {%endfor%}
+  </ol>
+  {% endfor %}
+</nav>
+
+
+<div class="card w-100">
+  <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">{{ product.description|default_if_none:"" }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ product.price|default_if_none:"not specified"  }}</li>
+    <li class="list-group-item">{{ product.manufacturer }}, {{ product.manufacturer.country }} /
+      {{ product.country|default_if_none:"country of origin is not specified" }}</li>
+    <li class="list-group-item">Rating, reviews</li>
+  </ul>
+  <div class="card-body">
+    <a href="{% url 'add-to-cart' product.pk %}" class="card-link">To cart</a>
+  </div>
+</div>
+
+
+
+{% endblock %}
+

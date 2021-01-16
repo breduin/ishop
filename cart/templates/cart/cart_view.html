@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+<div class="row">
+    <div class="col">
+
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price per item</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for cart_product in products %}
+
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ cart_product.product.name }}</td>
+      <td><form method="POST" action="{% url 'change-qty' cart_product.pk %}">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+          <input style="max-width: 6em;" name='qty' class="form-control form-control-sm" type="number" min="1" value="{{ cart_product.qty }}" aria-describedby="button-addon2">
+           <button class="btn btn-outline-secondary btn-sm" type="submit">Ok</button>
+           </div>
+           </form>
+      </td>
+
+      <td>{{ cart_product.product.price }}</td>
+      <td>{{ cart_product.sum }}</td>
+      <td>
+          <a href="{% url 'remove-from-cart' cart_product.pk %}">
+              <button type="button" class="btn btn-outline-danger btn-sm">Remove</button>
+          </a>
+      </td>
+
+
+    </tr>
+  {% endfor %}
+
+      <tr>
+      <th scope="col" colspan="4">Total cost:</th>
+      <th scope="col">{{ total_cost }}</th>
+    </tr>
+  </tbody>
+</table>
+
+<a class="btn btn-primary" href="{% url 'order' %}" role="button">Make order</a>
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
